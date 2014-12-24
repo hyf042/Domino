@@ -12,33 +12,15 @@ namespace Domino {
 		}
 	}
 
-	void GameObject::awake() {
-		for (auto comp : _components) {
-			comp->awake();
-		}
-	}
-
 	void GameObject::start() {
 		for (auto comp : _components) {
 			comp->start();
 		}
 	}
 
-	void GameObject::render() {
-		for (auto comp : _components) {
-			comp->render();
-		}
-	}
-
 	void GameObject::update() {
 		for (auto comp : _components) {
 			comp->update();
-		}
-	}
-
-	void GameObject::onDestroy() {
-		for (auto comp : _components) {
-			comp->onDestroy();
 		}
 	}
 }

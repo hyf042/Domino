@@ -6,7 +6,7 @@
 namespace Domino {
 	class Transform : public Component {
 	public:
-	private:
+		virtual ~Transform();
 	};
 }
 

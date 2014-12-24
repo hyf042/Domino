@@ -28,6 +28,15 @@
     <Filter Include="Domino\Util">
       <UniqueIdentifier>{ec43a9e3-7397-4b00-ba9e-46faca77c21c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Domino\Component\Render">
+      <UniqueIdentifier>{4be5ad51-b1da-44af-adfa-518b09db3e7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Domino\Lib">
+      <UniqueIdentifier>{85970599-f785-4648-9e4b-1f53023acc7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Domino\Lib\SOIL">
+      <UniqueIdentifier>{911f50b9-c64e-4298-8941-32e811a4ddd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,14 +48,47 @@
     <ClCompile Include="Domino\Core\GameObject.cpp">
       <Filter>Domino\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Domino\Object\Mesh.cpp">
-      <Filter>Domino\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Domino\Object\Shader.cpp">
       <Filter>Domino\Object</Filter>
     </ClCompile>
     <ClCompile Include="Domino\Struct\Vector.cpp">
       <Filter>Domino\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Component\Render\MeshRenderer.cpp">
+      <Filter>Domino\Component\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Lib\SOIL\image_DXT.c">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Lib\SOIL\image_helper.c">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Lib\SOIL\SOIL.c">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Lib\SOIL\stb_image_aug.c">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Component\Render\Renderer.cpp">
+      <Filter>Domino\Component\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Object\Material.cpp">
+      <Filter>Domino\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Struct\Color.cpp">
+      <Filter>Domino\Struct</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Util\Time.cpp">
+      <Filter>Domino\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Util\Mathf.cpp">
+      <Filter>Domino\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Component\Render\MeshFilter.cpp">
+      <Filter>Domino\Component\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Domino\Object\Mesh.cpp">
+      <Filter>Domino\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,9 +107,6 @@
     <ClInclude Include="Domino\Util\Debug.h">
       <Filter>Domino\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Domino\Object\Mesh.h">
-      <Filter>Domino\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Domino\Object\Shader.h">
       <Filter>Domino\Object</Filter>
     </ClInclude>
@@ -76,6 +115,54 @@
     </ClInclude>
     <ClInclude Include="Domino\Domino.h">
       <Filter>Domino</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Object\Object.h">
+      <Filter>Domino\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Component\Render\MeshRenderer.h">
+      <Filter>Domino\Component\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Object\Mesh.h">
+      <Filter>Domino\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Lib\SOIL\image_DXT.h">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Lib\SOIL\image_helper.h">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Lib\SOIL\SOIL.h">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Lib\SOIL\stb_image_aug.h">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Lib\SOIL\stbi_DDS_aug.h">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Lib\SOIL\stbi_DDS_aug_c.h">
+      <Filter>Domino\Lib\SOIL</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Object\Texture.h">
+      <Filter>Domino\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Object\Material.h">
+      <Filter>Domino\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Component\Render\Renderer.h">
+      <Filter>Domino\Component\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Struct\Color.h">
+      <Filter>Domino\Struct</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Util\Mathf.h">
+      <Filter>Domino\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Util\Time.h">
+      <Filter>Domino\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Domino\Component\Render\MeshFilter.h">
+      <Filter>Domino\Component\Render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

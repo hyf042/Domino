@@ -1,6 +1,8 @@
 #include "Application.h"
 
 namespace Domino {
+	float targetFPS = 0;
+
 	void Application::setUp(string title, int width, int height, int argc, char **argv) {
 		createContext(title, width, height, argc, argv);
 
@@ -12,15 +14,13 @@ namespace Domino {
 	}
 
 	void Application::onRender(void) {
-		mesh->render();
-	}
-
-	void Application::onDestroy() {
-		mesh->onDestroy();
+		mesh->render(MeshFilter::createSphereMesh());
 	}
 
 	void Application::onInit() {
-		mesh = shared_ptr<Mesh>(new Mesh(shared_ptr<Shader>(new Shader())));
+		auto texture = shared_ptr<Texture>(new Texture("sample.jpg"));
+		auto material = shared_ptr<Material>(new Material(texture));
+		mesh = shared_ptr<MeshRenderer>(new MeshRenderer(material));
 		mesh->init();
 	}
 
@@ -32,7 +32,13 @@ namespace Domino {
 		glutInitWindowSize(width, height);
 
 		glutCreateWindow(title.c_str());
-		glutDisplayFunc(drawFunc);
+		if (targetFPS == 0) {
+			targetFPS = 60;
+		}
+		float targetDeltaTime = 1000/targetFPS;
+
+		glutDisplayFunc(drawCB);
+		glutTimerFunc(targetDeltaTime, timerCB, targetDeltaTime);
 
 		createGlewContext();
 	}
@@ -48,14 +54,32 @@ namespace Domino {
 
 	void Application::render() {
 		glClearColor(0, 0, 0, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		onRender();
 
 		glFlush();
 	}
 
-	void Application::drawFunc() {
+	void Application::update() {
+		mesh->update();
+	}
+
+	void Application::drawCB() {
 		instance()->render();
 	}
+
+	void Application::timerCB(int ms) {
+		static int lastTime = 0;
+		float thisTime = glutGet(GLUT_ELAPSED_TIME);
+		Time::deltaTime = (float)(thisTime - lastTime)/1000.0f;
+		Time::time = thisTime/1000.0f;
+		lastTime = thisTime;
+
+		glutTimerFunc(ms, timerCB, ms);
+		instance()->update();
+		glutPostRedisplay();
+	}
+
 }

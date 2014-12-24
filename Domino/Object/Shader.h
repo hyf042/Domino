@@ -7,24 +7,24 @@ namespace Domino {
 	class Shader {
 	public:
 		Shader();
-		Shader(const GLchar *vertexShaderSrc, const GLchar *geometryShaderSrc, const GLchar *fragmentShaderSrc);
+		Shader(const GLchar *vertexShaderSrc, const GLchar *fragmentShaderSrc, const GLchar *geometryShaderSrc = NULL);
 
 		~Shader();
 
-		void use();
+		GLuint use();
 		GLuint getShaderProgram() const { 
-			return _shaderProgram; 
+			return shaderProgram; 
 		}
 		static GLuint createShader(GLenum type, const GLchar* src);
 	private:
-		void init(const GLchar *vertexShaderSrc, const GLchar *geometryShaderSrc, const GLchar *fragmentShaderSrc);
+		void init(const GLchar *vertexShaderSrc, const GLchar *geometryShaderSrc, const GLchar *fragmentShaderSrc = NULL);
 
 		static void outputErrorLog(GLuint shader);
 	private:
-		GLuint _shaderProgram;
-		GLuint _fragmentShader;
-		GLuint _vertexShader;
-		GLuint _geometryShader;
+		GLuint shaderProgram;
+		GLuint fragmentShader;
+		GLuint vertexShader;
+		GLuint geometryShader;
 	};
 }
 

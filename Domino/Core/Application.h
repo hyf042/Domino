@@ -7,7 +7,7 @@ namespace Domino {
 	using std::shared_ptr;
 	using std::string;
 
-	class Mesh;
+	class MeshRenderer;
 
 	class Application {
 		Application() {}
@@ -17,27 +17,26 @@ namespace Domino {
 			return m_instance;
 		}
 
-		virtual ~Application() {
-			onDestroy();
-		}
+		virtual ~Application() {}
 
 		void setUp(string title, int width, int height, int argc, char **argv);
 		void run();
 
 	protected:
 		virtual void onRender(void);
-		virtual void onDestroy();
 		virtual void onInit();
 	private:
-		shared_ptr<Mesh> mesh;
+		shared_ptr<MeshRenderer> mesh;
 	private:
 		void createContext(string title, int width, int height, int argc, char **argv);
 
 		void createGlewContext();
 
 		void render();
+		void update();
 
-		static void drawFunc();
+		static void drawCB();
+		static void timerCB(int ms);
 	};
 }
 

@@ -13,6 +13,11 @@ namespace Domino {
 		Vector2():x(0), y(0) {}
 		Vector2(float x, float y):x(x), y(y) {}
 		friend Vector2 operator+(const Vector2 &a, const Vector2 &b);
+
+		void setValue(float x, float y) {
+			this->x = x;
+			this->y = y;
+		}
 	};
 
 	struct Vector3 {
@@ -29,6 +34,12 @@ namespace Domino {
 		friend Vector3 operator/(const Vector3 &a, double b);
 		static float dot(const Vector3 &a, const Vector3 &b);
 		static Vector3 cross(const Vector3 &a, const Vector3 &b) ;
+
+		void setValue(float x, float y, float z) {
+			this->x = x;
+			this->y = y;
+			this->z = z;
+		}
 	};
 
 	struct Vector4 {
@@ -36,6 +47,12 @@ namespace Domino {
 		float x, y, z, w;
 		Vector4():x(0), y(0), z(0), w(0) {}
 		Vector4(float x, float y, float z, float w):x(x), y(y), z(z), w(w) {}
+		void setValue(float x, float y, float z, float w) {
+			this->x = x;
+			this->y = y;
+			this->z = z;
+			this->w = w;
+		}
 	};
 }
 
