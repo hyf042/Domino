@@ -1,0 +1,4 @@
+Domino
+======
+
+# Course project for MULTICORE ARCHITECTURE AND PARALLEL PROGRAMMING.
