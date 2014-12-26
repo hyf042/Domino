@@ -39,11 +39,8 @@ namespace Domino {
 
 		glutDisplayFunc(drawCB);
 		glutTimerFunc(targetDeltaTime, timerCB, targetDeltaTime);
+		glutReshapeFunc(reshapeCB);
 
-		createGlewContext();
-	}
-
-	void Application::createGlewContext() {
 		glewExperimental = GL_TRUE;
 		GLenum err = glewInit();
 		if (GLEW_OK != err)
@@ -71,15 +68,14 @@ namespace Domino {
 	}
 
 	void Application::timerCB(int ms) {
-		static int lastTime = 0;
-		float thisTime = glutGet(GLUT_ELAPSED_TIME);
-		Time::deltaTime = (float)(thisTime - lastTime)/1000.0f;
-		Time::time = thisTime/1000.0f;
-		lastTime = thisTime;
+		int thisTime = glutGet(GLUT_ELAPSED_TIME);
+		Time::update(thisTime);
 
 		glutTimerFunc(ms, timerCB, ms);
 		instance()->update();
 		glutPostRedisplay();
 	}
 
+	void Application::reshapeCB(int width, int height) {
+	}
 }

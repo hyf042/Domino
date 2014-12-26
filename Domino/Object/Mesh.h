@@ -16,15 +16,15 @@ namespace Domino {
 			init(vertices, colors, uvs, elementArray);
 		}
 
-		Mesh(vector<float> vertexData, vector<uint32> elementData) {
-			this->vertexData = vertexData;
+		Mesh(vector<float> verticeData, vector<uint32> elementData) {
+			this->verticeData = verticeData;
 			this->elementData = elementData;
 		}
 
 		shared_ptr<Mesh> clone() const;
 
 		const vector<float>& getVerticesData() {
-			return vertexData;
+			return verticeData;
 		}
 		const vector<uint32> getElementsData() {
 			return elementData;
@@ -36,14 +36,12 @@ namespace Domino {
 	private:
 		void init(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray);
 
-		vector<float> vertexData;
+		vector<float> verticeData;
 		vector<GLuint> elementData;
 	};
 
 	
 	class MeshImporter{
-	private:
-		static void buildSphereVertex(float radius, float a, float b, Vector3 &vertex, Vector3 &normal);
 	public:
 		static shared_ptr<Mesh> sharedCubeMesh();
 		static shared_ptr<Mesh> sharedSphereMesh();

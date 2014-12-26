@@ -3,19 +3,22 @@
 namespace Domino {
 	using std::vector;
 
+	/**
+	 * Mesh
+	 **/
 	void Mesh::init(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray) {
 		uint32 n = vertices.size();
 		uint32 segmentSize = (3 + 3 + 2);
-		vertexData.resize(n * (3 + 3 + 2));
+		verticeData.resize(n * (3 + 3 + 2));
 		for (uint32 i = 0; i < n; i++) {
-			vertexData[i * segmentSize + 0] = vertices[i].x; 
-			vertexData[i * segmentSize + 1] = vertices[i].y;
-			vertexData[i * segmentSize + 2] = vertices[i].z;
-			vertexData[i * segmentSize + 3] = colors[i].r;
-			vertexData[i * segmentSize + 4] = colors[i].g;
-			vertexData[i * segmentSize + 5] = colors[i].b;
-			vertexData[i * segmentSize + 6] = uvs[i].x;
-			vertexData[i * segmentSize + 7] = uvs[i].y;
+			verticeData[i * segmentSize + 0] = vertices[i].x; 
+			verticeData[i * segmentSize + 1] = vertices[i].y;
+			verticeData[i * segmentSize + 2] = vertices[i].z;
+			verticeData[i * segmentSize + 3] = colors[i].r;
+			verticeData[i * segmentSize + 4] = colors[i].g;
+			verticeData[i * segmentSize + 5] = colors[i].b;
+			verticeData[i * segmentSize + 6] = uvs[i].x;
+			verticeData[i * segmentSize + 7] = uvs[i].y;
 		}
 		elementData.resize(elementArray.size());
 		for (uint32 i = 0; i < elementArray.size(); i++) {
@@ -24,7 +27,20 @@ namespace Domino {
 	}
 
 	shared_ptr<Mesh> Mesh::clone() const {
-		return shared_ptr<Mesh>(new Mesh(vertexData, elementData));
+		return shared_ptr<Mesh>(new Mesh(verticeData, elementData));
+	}
+
+	/**
+	 * MeshImporter
+	 **/
+
+	void buildSphereVertex(float radius, float a, float b, Vector3 &vertex, Vector3 &normal){
+		float sina = sinf(a);
+		vertex = Vector3(radius*sina*cosf(b), 
+						radius*sina*sinf(b),
+						radius*cosf(a));
+		normal = vertex;
+		normal.normalize();
 	}
 
 	shared_ptr<Mesh> MeshImporter::sharedCubeMesh(){
@@ -119,15 +135,6 @@ namespace Domino {
 			mesh = shared_ptr<Mesh>(new Mesh(vertices, colors, uvs, elements));
 		}
 		return mesh;
-	}
-
-	void MeshImporter::buildSphereVertex(float radius, float a, float b, Vector3 &vertex, Vector3 &normal){
-		float sina = sinf(a);
-		vertex = Vector3(radius*sina*cosf(b), 
-						radius*sina*sinf(b),
-						radius*cosf(a));
-		normal = vertex;
-		normal.normalize();
 	}
 
 	shared_ptr<Mesh> MeshImporter::sharedSphereMesh(){

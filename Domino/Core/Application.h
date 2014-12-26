@@ -30,12 +30,11 @@ namespace Domino {
 	private:
 		void createContext(string title, int width, int height, int argc, char **argv);
 
-		void createGlewContext();
-
 		void render();
 		void update();
 
 		static void drawCB();
+		static void reshapeCB(int width, int height);
 		static void timerCB(int ms);
 	};
 }
