@@ -4,12 +4,10 @@
 #include "../../Domino.h"
 
 namespace Domino {
-	class Mesh;
-	class Material;
-	class MeshFilter;
 
 	class Renderer : public Component {
 	public:
+		Renderer() {}
 		Renderer(shared_ptr<Material> material):material(material) {}
 		virtual ~Renderer() {}
 
@@ -20,7 +18,7 @@ namespace Domino {
 			this->material = material;
 		}
 
-		virtual void render(shared_ptr<MeshFilter> meshFilter) = 0;
+		virtual void render() = 0;
 	protected:
 		shared_ptr<Material> material;
 	};

@@ -1,4 +1,4 @@
-#include "Time.h"
+#include "../Domino.h"
 
 namespace Domino {
 	float Time::deltaTime = 0;

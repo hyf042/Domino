@@ -7,9 +7,9 @@ namespace Domino {
 	using std::shared_ptr;
 	using std::string;
 
-	class MeshRenderer;
-
 	class Application {
+		shared_ptr<Scene> activeScene;
+
 		Application() {}
 	public:
 		static shared_ptr<Application> instance() {
@@ -22,11 +22,13 @@ namespace Domino {
 		void setUp(string title, int width, int height, int argc, char **argv);
 		void run();
 
+		shared_ptr<Scene> getActiveScene() {
+			return activeScene;
+		}
+
 	protected:
 		virtual void onRender(void);
-		virtual void onInit();
-	private:
-		shared_ptr<MeshRenderer> mesh;
+		virtual void onUpdate(void);
 	private:
 		void createContext(string title, int width, int height, int argc, char **argv);
 

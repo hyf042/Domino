@@ -1,4 +1,4 @@
-#include "Mesh.h"
+#include "../Domino.h"
 
 namespace Domino {
 	using std::vector;
@@ -6,6 +6,26 @@ namespace Domino {
 	/**
 	 * Mesh
 	 **/
+	Mesh::Mesh(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray) {
+		init(vertices, colors, uvs, elementArray);
+	}
+
+	Mesh::Mesh(vector<float> verticeData, vector<uint32> elementData) {
+		this->verticeData = verticeData;
+		this->elementData = elementData;
+	}
+
+	const vector<float>& Mesh::getVerticesData() {
+		return verticeData;
+	}
+	const vector<uint32> Mesh::getElementsData() {
+		return elementData;
+	}
+
+	bool Mesh::useIndex() const {
+		return elementData.size() > 0;
+	}
+
 	void Mesh::init(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray) {
 		uint32 n = vertices.size();
 		uint32 segmentSize = (3 + 3 + 2);
@@ -142,7 +162,7 @@ namespace Domino {
 		if(!mesh){
 			float radius = 0.5f;
 
-			uint32 slices = 8;
+			uint32 slices = 4;
 
 			int w=2*slices, h=slices;
 			float hStep = 180.0 / (h-1);

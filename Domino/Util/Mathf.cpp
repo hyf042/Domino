@@ -1,4 +1,4 @@
-#include "Mathf.h"
+#include "../Domino.h"
 
 namespace Domino {
 	const float Mathf::PI = 3.14159265359;

@@ -1,5 +1,4 @@
-#include "../Util/Mathf.h"
-#include "Color.h"
+#include "../Domino.h"
 
 namespace Domino {
 	Color::Color(float r, float g, float b, float a){

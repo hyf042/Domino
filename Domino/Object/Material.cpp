@@ -1,4 +1,4 @@
-#include "Material.h"
+#include "../Domino.h"
 
 namespace Domino {
 	Material::Material() {

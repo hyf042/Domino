@@ -1,4 +1,4 @@
-#include "MeshFilter.h"
+#include "../../Domino.h"
 
 namespace Domino {
 	shared_ptr<Mesh> MeshFilter::getMesh() {

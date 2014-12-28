@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "../Domino.h"
 
 namespace Domino {
 	float targetFPS = 0;
@@ -6,22 +6,21 @@ namespace Domino {
 	void Application::setUp(string title, int width, int height, int argc, char **argv) {
 		createContext(title, width, height, argc, argv);
 
-		onInit();
+		activeScene = shared_ptr<Scene>(new Scene());
 	}
 
 	void Application::run() {
+		activeScene->init();
+		activeScene->start();
 		glutMainLoop();
 	}
 
 	void Application::onRender(void) {
-		mesh->render(MeshFilter::createSphereMesh());
+		activeScene->render();
 	}
 
-	void Application::onInit() {
-		auto texture = shared_ptr<Texture>(new Texture("sample.jpg"));
-		auto material = shared_ptr<Material>(new Material(texture));
-		mesh = shared_ptr<MeshRenderer>(new MeshRenderer(material));
-		mesh->init();
+	void Application::onUpdate(void) {
+		activeScene->update();
 	}
 
 	void Application::createContext(string title, int width, int height, int argc, char **argv) {
@@ -60,7 +59,12 @@ namespace Domino {
 	}
 
 	void Application::update() {
-		mesh->update();
+		//mesh->update();
+		GameObject::doStart();
+
+		onUpdate();
+
+		GameObject::doDestroy();
 	}
 
 	void Application::drawCB() {

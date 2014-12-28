@@ -4,7 +4,7 @@
 #include "../Domino.h"
 
 namespace Domino {
-	class Shader {
+	class Shader : public Object {
 	public:
 		Shader();
 		Shader(const GLchar *vertexShaderSrc, const GLchar *fragmentShaderSrc, const GLchar *geometryShaderSrc = NULL);

@@ -5,34 +5,20 @@
 
 namespace Domino {
 	using std::vector;
-
-	struct Vector3;
-	struct Vector2;
-	struct Color;
+	using std::shared_ptr;
 
 	class Mesh : public Object {
 	public:
-		Mesh(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray) {
-			init(vertices, colors, uvs, elementArray);
-		}
+		Mesh(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray);
 
-		Mesh(vector<float> verticeData, vector<uint32> elementData) {
-			this->verticeData = verticeData;
-			this->elementData = elementData;
-		}
+		Mesh(vector<float> verticeData, vector<uint32> elementData);
 
 		shared_ptr<Mesh> clone() const;
 
-		const vector<float>& getVerticesData() {
-			return verticeData;
-		}
-		const vector<uint32> getElementsData() {
-			return elementData;
-		}
+		const vector<float>& getVerticesData();
+		const vector<uint32> getElementsData();
 
-		bool useIndex() const {
-			return elementData.size() > 0;
-		}
+		bool useIndex() const;
 	private:
 		void init(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray);
 

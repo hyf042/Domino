@@ -6,7 +6,7 @@
 namespace Domino {
 	using std::shared_ptr;
 
-	class MeshFilter : public Component{
+	class MeshFilter : public Component {
 	private:
 		shared_ptr<Mesh> sharedMesh;
 		shared_ptr<Mesh> mesh;

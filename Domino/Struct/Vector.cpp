@@ -1,4 +1,4 @@
-#include "Vector.h"
+#include "../Domino.h"
 
 namespace Domino {
 	Vector2 operator+(const Vector2 &a, const Vector2 &b) {

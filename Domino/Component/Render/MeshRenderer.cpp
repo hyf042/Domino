@@ -1,7 +1,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "MeshRenderer.h"
+#include "../../Domino.h"
 
 namespace Domino {
 
@@ -16,7 +16,15 @@ namespace Domino {
 		glGenBuffers(1, &ebo);
 	}
 
-	void MeshRenderer::render(shared_ptr<MeshFilter> meshFilter) {
+	void MeshRenderer::render() {
+		if (!getMaterial()) {
+			return;
+		}
+		auto meshFilter = getGameObject()->GetComponent<MeshFilter>();
+		if (!meshFilter) {
+			return;
+		}
+
 		auto mesh = meshFilter->getMesh();
 		auto vertices = mesh->getVerticesData();
 		if (vertices.size() == 0) {
@@ -84,10 +92,5 @@ namespace Domino {
 		glm::mat4 proj = glm::perspective(45.0f, 800.0f / 600.0f, 1.0f, 10.0f);
 		GLint uniProj = glGetUniformLocation(shaderProgram, "proj");
 		glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
-	}
-
-	void MeshRenderer::setMaterial(shared_ptr<Material> material) {
-		Renderer::setMaterial(material);
-		//setLayout();
 	}
 }

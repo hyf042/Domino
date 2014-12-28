@@ -6,20 +6,15 @@
 namespace Domino {
 	using std::shared_ptr;
 
-	class Shader;
-	class Mesh;
-	class MeshFilter;
-
 	class MeshRenderer : public Renderer {
 	public:
+		MeshRenderer() {}
 		MeshRenderer(shared_ptr<Material> material):Renderer(material) {}
 		virtual ~MeshRenderer();
 
-		void init() override;
+		void init();
 
-		void setMaterial(shared_ptr<Material> material) override;
-
-		void render(shared_ptr<MeshFilter> meshFilter) override;
+		void render() override;
 
 	private:
 		void setLayout(shared_ptr<Shader> shader);
