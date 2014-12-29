@@ -10,8 +10,7 @@ namespace Domino {
 	}
 
 	void Application::run() {
-		activeScene->init();
-		activeScene->start();
+		activeScene->awake();
 		glutMainLoop();
 	}
 

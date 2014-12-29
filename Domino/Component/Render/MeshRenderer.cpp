@@ -10,8 +10,7 @@ namespace Domino {
 		glDeleteBuffers(1, &vbo);
 	}
 
-	void MeshRenderer::init() {
-		// Create Vertex Array Object
+	void MeshRenderer::awake() {
 		glGenBuffers(1, &vbo);
 		glGenBuffers(1, &ebo);
 	}
@@ -20,7 +19,7 @@ namespace Domino {
 		if (!getMaterial()) {
 			return;
 		}
-		auto meshFilter = getGameObject()->GetComponent<MeshFilter>();
+		auto meshFilter = getGameObject()->getComponent<MeshFilter>();
 		if (!meshFilter) {
 			return;
 		}
@@ -72,12 +71,14 @@ namespace Domino {
 
 		GLint uniModel = glGetUniformLocation(shaderProgram, "model");
 		// Calculate transformation
-        glm::mat4 model;
+        glm::mat4 trans, model;
+		trans = glm::translate(glm::mat4(1.0f), (glm::vec3)getTransform()->position());
         model = glm::rotate(
-            model,
+            trans,
             Time::time * 3.14159267f,
             glm::vec3(0.0f, 0.0f, 1.0f)
         );
+		
         glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
 		// Set up projection

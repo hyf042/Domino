@@ -2,17 +2,19 @@
 
 namespace Domino {
 	Transform::Transform() {
-		auto scene = Application::instance()->getActiveScene();
-		if (scene && scene->getRootObj()) {
-			setParent(scene->getRootObj()->getTransform());
-		}
 		localPosition = Vector3(0, 0, 0);
 		localRotation = Vector3(0, 0, 0);
 		localScale = Vector3(1, 1, 1);
 	}
 
 	void Transform::updateTransform() {
-
+		if (!parent) {
+			// rootObj do not update
+			return;
+		}
+		worldPosition = parent->getTransform()->position() + localPosition;
+		worldRotation = localRotation;
+		worldScale = localScale;
 	}
 
 	void Transform::addChild(TransformPtr child) {

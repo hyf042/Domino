@@ -1,6 +1,9 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "../Domino.h"
 
 namespace Domino {
@@ -39,6 +42,15 @@ namespace Domino {
 			this->x = x;
 			this->y = y;
 			this->z = z;
+		}
+
+		operator glm::vec3() const {
+			return glm::vec3(x, y, z);
+		}
+		Vector3(const glm::vec3 &val) {
+			x = val.x;
+			y = val.y;
+			z = val.z;
 		}
 	};
 

@@ -162,7 +162,7 @@ namespace Domino {
 		if(!mesh){
 			float radius = 0.5f;
 
-			uint32 slices = 4;
+			uint32 slices = 20;
 
 			int w=2*slices, h=slices;
 			float hStep = 180.0 / (h-1);

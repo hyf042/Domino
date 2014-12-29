@@ -21,8 +21,10 @@ namespace Domino {
 		shared_ptr<Renderer> renderer;
 		vector<shared_ptr<Component> > components;
 		bool active;
-	public:
+
+	private:
 		GameObject();
+	public:
 		virtual ~GameObject();
 
 		string getName() const {
@@ -42,32 +44,35 @@ namespace Domino {
 			return active;
 		}
 
-		shared_ptr<Component> AddComponent(shared_ptr<Component> comp);
+		shared_ptr<Component> addComponent(shared_ptr<Component> comp);
 		template<typename T>
-		shared_ptr<T> AddComponent() {
+		shared_ptr<T> addComponent() {
 			T* t = new T();
-			AddComponent(shared_ptr<Component>(t));
+			addComponent(shared_ptr<Component>(t));
 			return shared_ptr<T>(t);
 		}
-		void RemoveComponent(shared_ptr<Component> comp);
+		void removeComponent(shared_ptr<Component> comp);
 		template<typename T>
-		shared_ptr<T> GetComponent() {
+		shared_ptr<T> getComponent() {
 			for (auto comp : components) {
 				if (typeid(*comp.get()) == typeid(T)) {
-					return shared_ptr<T>(dynamic_cast<T*>(comp.get()));
+					return std::dynamic_pointer_cast<T>(comp);
 				}
 			}
-			return shared_ptr<T>();
+			return nullptr;
 		}
 
 		/** Callbacks **/
-		void init();
-
-		void start();
+		void awake();
 
 		void update();
 
 		void render();
+
+		void updateTransform();
+
+	private:
+		void initComponents();
 
 	public:
 		static void doStart();

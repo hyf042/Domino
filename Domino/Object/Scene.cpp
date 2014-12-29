@@ -1,12 +1,8 @@
 #include "../Domino.h"
 
 namespace Domino {
-	void Scene::init() {
-		rootObj->init();
-	}
-
-	void Scene::start() {
-		rootObj->start();
+	void Scene::awake() {
+		rootObj->awake();
 	}
 
 	void Scene::render() {
@@ -14,6 +10,8 @@ namespace Domino {
 	}
 
 	void Scene::update() {
+		rootObj->updateTransform();
+
 		rootObj->update();
 	}
 }

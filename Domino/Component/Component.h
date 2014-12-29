@@ -16,13 +16,16 @@ namespace Domino {
 		std::string getName() const {
 			return gameObject->getName();
 		}
+		shared_ptr<Transform> getTransform() const {
+			return getGameObject()->getTransform();
+		}
 
 		void setGameObject(shared_ptr<GameObject> gameObject);
 		shared_ptr<GameObject> getGameObject() const {
 			return gameObject;
 		}
 
-		virtual void init() {}
+		virtual void awake() {}
 		virtual void start() {}
 		virtual void update() {}
 	};

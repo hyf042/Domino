@@ -7,15 +7,13 @@ namespace Domino {
 	GameObject::GameObject() {
 		static int gameObjectCnt = 0;
 		name = "GameObject" + Strings::int2Str(gameObjectCnt++);
-		transform = shared_ptr<Transform>(new Transform());
-		AddComponent(transform);
 		active = true;
 	}
 	GameObject::~GameObject() {
 		transform->setParent(nullptr);
 	}
 
-	shared_ptr<Component> GameObject::AddComponent(shared_ptr<Component> comp) {
+	shared_ptr<Component> GameObject::addComponent(shared_ptr<Component> comp) {
 		if (std::find(components.begin(), components.end(), comp) != components.end()) {
 			return nullptr;
 		}
@@ -28,11 +26,11 @@ namespace Domino {
 		const type_info &typeinfo = typeid(*comp);
 		if(typeinfo==typeid(Renderer)
 			||typeinfo==typeid(MeshRenderer))
-			renderer = shared_ptr<Renderer>((Renderer*)comp.get());
+			renderer = std::dynamic_pointer_cast<Renderer>(comp);
 
 		return comp;
 	}
-	void GameObject::RemoveComponent(shared_ptr<Component> comp) {
+	void GameObject::removeComponent(shared_ptr<Component> comp) {
 		if (comp == transform) {
 			return;
 		}
@@ -42,16 +40,30 @@ namespace Domino {
 		}
 	}
 
-	/** Callbacks **/
-	void GameObject::init() {
-		for (auto comp : components) {
-			comp->init();
+	void GameObject::initComponents() {
+		transform = shared_ptr<Transform>(new Transform());
+		auto scene = Application::instance()->getActiveScene();
+		if (scene && scene->getRootObj()) {
+			transform->setParent(scene->getRootObj()->getTransform());
+		}
+		addComponent(transform);
+	}
+
+	void GameObject::updateTransform() {
+		getTransform()->updateTransform();
+		for (auto obj : transform->getChildren()) {
+			obj->getGameObject()->updateTransform();
 		}
 	}
 
-	void GameObject::start() {
+	/** Callbacks **/
+	void GameObject::awake() {
 		for (auto comp : components) {
-			comp->start();
+			comp->awake();
+		}
+
+		for (auto obj : transform->getChildren()) {
+			obj->getGameObject()->awake();
 		}
 	}
 
@@ -69,8 +81,13 @@ namespace Domino {
 		for (auto comp : components) {
 			comp->update();
 		}
+
+		for (auto obj : transform->getChildren()) {
+			obj->getGameObject()->update();
+		}
 	}
 
+	/** static methods **/
 	void GameObject::doStart() {
 		while (!startQueue.empty()) {
 			(*startQueue.rbegin())->start();
@@ -90,7 +107,10 @@ namespace Domino {
 		}
 		destroyQueue.push_back(obj);
 	}
+
 	shared_ptr<GameObject> GameObject::createNew() {
-		return shared_ptr<GameObject>(new GameObject());
+		auto obj = shared_ptr<GameObject>(new GameObject());
+		obj->initComponents();
+		return obj;
 	}
 }

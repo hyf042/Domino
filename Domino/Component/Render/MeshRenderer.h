@@ -12,7 +12,7 @@ namespace Domino {
 		MeshRenderer(shared_ptr<Material> material):Renderer(material) {}
 		virtual ~MeshRenderer();
 
-		void init();
+		void awake() override;
 
 		void render() override;
 

@@ -10,9 +10,10 @@ void buildScene() {
 	auto material = shared_ptr<Material>(new Material(texture));
 
 	auto obj = GameObject::createNew();
-	obj->AddComponent(MeshFilter::createSphereMesh());
+	obj->addComponent(MeshFilter::createSphereMesh());
 	auto meshRenderer = shared_ptr<MeshRenderer>(new MeshRenderer(material));
-	obj->AddComponent(meshRenderer);
+	obj->addComponent(meshRenderer);
+	obj->getTransform()->localPosition = Vector3(1, 0, 0);
 }
 
 int main(int argc, char **argv)
