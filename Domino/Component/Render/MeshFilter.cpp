@@ -14,8 +14,8 @@ namespace Domino {
 		return fromSharedMesh(MeshImporter::sharedCubeMesh());
 	}
 
-	shared_ptr<MeshFilter> MeshFilter::createSphereMesh() {
-		return fromSharedMesh(MeshImporter::sharedSphereMesh());
+	shared_ptr<MeshFilter> MeshFilter::createSphereMesh(uint32 slices) {
+		return fromSharedMesh(MeshImporter::sharedSphereMesh(slices));
 	}
 
 	shared_ptr<MeshFilter> MeshFilter::fromSharedMesh(shared_ptr<Mesh> sharedMesh) {

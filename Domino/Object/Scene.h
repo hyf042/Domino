@@ -17,7 +17,7 @@ namespace Domino {
 			return rootObj;
 		}
 
-		void awake();
+		void startAll();
 		void render();
 		void update();
 	};

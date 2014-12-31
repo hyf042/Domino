@@ -10,7 +10,7 @@ namespace Domino {
 	}
 
 	void Application::run() {
-		activeScene->awake();
+		activeScene->startAll();
 		glutMainLoop();
 	}
 
@@ -45,6 +45,9 @@ namespace Domino {
 		{
 			fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
 		}
+
+		this->width = width;
+		this->height = height;
 	}
 
 	void Application::render() {

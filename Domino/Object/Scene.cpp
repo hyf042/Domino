@@ -1,8 +1,8 @@
 #include "../Domino.h"
 
 namespace Domino {
-	void Scene::awake() {
-		rootObj->awake();
+	void Scene::startAll() {
+		rootObj->startAll();
 	}
 
 	void Scene::render() {

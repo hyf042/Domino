@@ -28,6 +28,7 @@ namespace Domino {
 			||typeinfo==typeid(MeshRenderer))
 			renderer = std::dynamic_pointer_cast<Renderer>(comp);
 
+		comp->awake();
 		return comp;
 	}
 	void GameObject::removeComponent(shared_ptr<Component> comp) {
@@ -57,17 +58,25 @@ namespace Domino {
 	}
 
 	/** Callbacks **/
-	void GameObject::awake() {
+	void GameObject::startAll() {
+		if (!active) {
+			return;
+		}
+
 		for (auto comp : components) {
-			comp->awake();
+			comp->startAll();
 		}
 
 		for (auto obj : transform->getChildren()) {
-			obj->getGameObject()->awake();
+			obj->getGameObject()->startAll();
 		}
 	}
 
 	void GameObject::render() {
+		if (!active) {
+			return;
+		}
+
 		if (renderer) {
 			renderer->render();
 		}
@@ -78,6 +87,10 @@ namespace Domino {
 	}
 
 	void GameObject::update() {
+		if (!active) {
+			return;
+		}
+
 		for (auto comp : components) {
 			comp->update();
 		}
@@ -98,11 +111,12 @@ namespace Domino {
 		while (!destroyQueue.empty()) {
 			shared_ptr<GameObject> obj = (*destroyQueue.rbegin());
 			destroyQueue.pop_back();
-			obj->getTransform()->setParent(shared_ptr<Transform>());
+			obj->getTransform()->setParent(nullptr);
+			// TODO(yifeng): solve cyclic reference between GameObject & Component.
 		}
 	}
 	void GameObject::destroy(shared_ptr<GameObject> obj) {
-		if (std::find(destroyQueue.begin(), destroyQueue.end(), obj) == destroyQueue.end()) {
+		if (std::find(destroyQueue.begin(), destroyQueue.end(), obj) != destroyQueue.end()) {
 			return;
 		}
 		destroyQueue.push_back(obj);

@@ -47,9 +47,9 @@ namespace Domino {
 		shared_ptr<Component> addComponent(shared_ptr<Component> comp);
 		template<typename T>
 		shared_ptr<T> addComponent() {
-			T* t = new T();
-			addComponent(shared_ptr<Component>(t));
-			return shared_ptr<T>(t);
+			auto t = shared_ptr<T>(new T());
+			addComponent(t);
+			return t;
 		}
 		void removeComponent(shared_ptr<Component> comp);
 		template<typename T>
@@ -63,7 +63,7 @@ namespace Domino {
 		}
 
 		/** Callbacks **/
-		void awake();
+		void startAll();
 
 		void update();
 

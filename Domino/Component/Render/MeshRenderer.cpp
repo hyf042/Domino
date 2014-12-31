@@ -71,26 +71,31 @@ namespace Domino {
 
 		GLint uniModel = glGetUniformLocation(shaderProgram, "model");
 		// Calculate transformation
-        glm::mat4 trans, model;
+        glm::mat4 trans, scale, model;
 		trans = glm::translate(glm::mat4(1.0f), (glm::vec3)getTransform()->position());
+		scale = glm::scale(trans, (glm::vec3)getTransform()->scale());
         model = glm::rotate(
-            trans,
-            Time::time * 3.14159267f,
-            glm::vec3(0.0f, 0.0f, 1.0f)
+            scale,
+            1.5f * Mathf::PI,
+            glm::vec3(0.0f, 1.0f, 0.0f)
         );
 		
         glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
 		// Set up projection
 		glm::mat4 view = glm::lookAt(
-			glm::vec3(1.2f, 1.2f, 1.2f),
 			glm::vec3(0.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, 0.0f, 1.0f)
+			glm::vec3(0.0f, 0.0f, 1.0f),
+			glm::vec3(0.0f, 1.0f, 0.0f)
 		);
 		GLint uniView = glGetUniformLocation(shaderProgram, "view");
 		glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
 
-		glm::mat4 proj = glm::perspective(45.0f, 800.0f / 600.0f, 1.0f, 10.0f);
+		glm::mat4 proj = glm::perspective(
+			45.0f, 
+			(float)Application::instance()->getWidth() / Application::instance()->getHeight(), 
+			1.0f, 
+			10.0f);
 		GLint uniProj = glGetUniformLocation(shaderProgram, "proj");
 		glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
 	}

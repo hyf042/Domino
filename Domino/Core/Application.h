@@ -9,6 +9,8 @@ namespace Domino {
 
 	class Application {
 		shared_ptr<Scene> activeScene;
+		int width;
+		int height;
 
 		Application() {}
 	public:
@@ -18,6 +20,13 @@ namespace Domino {
 		}
 
 		virtual ~Application() {}
+
+		int getWidth() const {
+			return width;
+		}
+		int getHeight() const {
+			return height;
+		}
 
 		void setUp(string title, int width, int height, int argc, char **argv);
 		void run();

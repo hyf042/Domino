@@ -25,8 +25,13 @@ namespace Domino {
 			return gameObject;
 		}
 
+		// Invoke when scene start
+		virtual void startAll() {}
+		// Invoke when component is created
 		virtual void awake() {}
+		// Invoke before the first frame of component
 		virtual void start() {}
+		// Invoke every frame
 		virtual void update() {}
 	};
 }

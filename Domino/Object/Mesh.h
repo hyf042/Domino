@@ -30,7 +30,7 @@ namespace Domino {
 	class MeshImporter{
 	public:
 		static shared_ptr<Mesh> sharedCubeMesh();
-		static shared_ptr<Mesh> sharedSphereMesh();
+		static shared_ptr<Mesh> sharedSphereMesh(uint32 slices = 20);
 		static shared_ptr<Mesh> sharedSurfaceMesh();
 	};
 }

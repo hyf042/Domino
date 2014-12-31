@@ -157,12 +157,10 @@ namespace Domino {
 		return mesh;
 	}
 
-	shared_ptr<Mesh> MeshImporter::sharedSphereMesh(){
-		static shared_ptr<Mesh> mesh;
-		if(!mesh){
+	shared_ptr<Mesh> MeshImporter::sharedSphereMesh(uint32 slices){
+		static std::map<uint32, shared_ptr<Mesh> > meshs; 
+		if(meshs.find(slices) == meshs.end()){
 			float radius = 0.5f;
-
-			uint32 slices = 20;
 
 			int w=2*slices, h=slices;
 			float hStep = 180.0 / (h-1);
@@ -209,9 +207,9 @@ namespace Domino {
 					
 			}
 
-			mesh = shared_ptr<Mesh>(new Mesh(vertices, colors, uvs, elements));
+			meshs[slices] = shared_ptr<Mesh>(new Mesh(vertices, colors, uvs, elements));
 		}
-		return mesh;
+		return meshs[slices];
 	}
 
 	shared_ptr<Mesh> MeshImporter::sharedSurfaceMesh() {

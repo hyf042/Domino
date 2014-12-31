@@ -29,6 +29,8 @@ namespace Domino {
 
 		static void caltStatInfo(int timeDelta) {
 			fps = fpsCounter * 1000.0f / timeDelta;
+			fpsCounter = 0;
+			std::cout << fps << std::endl;
 		}
 
 		static void updateStatInfo() {
