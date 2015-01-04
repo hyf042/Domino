@@ -7,6 +7,7 @@ namespace Domino {
 	struct Vector3;
 	struct Vector4;
 	struct Color;
+	struct Quaternion;
 
 	class Object;
 	class Shader;
@@ -22,6 +23,8 @@ namespace Domino {
 	class MeshFilter;
 	class Renderer;
 	class MeshRenderer;
+	class Behaviour;
+	class MonoBehaviour;
 
 	class Scene;
 }

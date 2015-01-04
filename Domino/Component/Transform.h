@@ -16,6 +16,7 @@ namespace Domino {
 		Vector3 localRotation;
 		Vector3 localScale;
 	private:
+		glm::mat4 matrix;
 		TransformPtr parent;
 		vector<TransformPtr> children;
 	protected:
@@ -58,6 +59,9 @@ namespace Domino {
 		}
 		Vector3 scale() const {
 			return worldScale;
+		}
+		glm::mat4 getMatrix() const {
+			return matrix;
 		}
 
 	private:

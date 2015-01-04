@@ -32,6 +32,7 @@ typedef short int16;
 
 #include "Struct/Vector.h"
 #include "Struct/Color.h"
+#include "Struct/Quaternion.h"
 
 #include "Object/Object.h"
 #include "Object/Shader.h"
@@ -46,6 +47,8 @@ typedef short int16;
 #include "Component/Render/MeshFilter.h"
 #include "Component/Render/Renderer.h"
 #include "Component/Render/MeshRenderer.h"
+#include "Component/Behaviour.h"
+#include "Component/MonoBehaviour.h"
 
 #include "Object/Scene.h"
 #include "Core/Application.h"

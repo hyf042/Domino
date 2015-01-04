@@ -70,16 +70,8 @@ namespace Domino {
 		GLuint shaderProgram = shader->use();
 
 		GLint uniModel = glGetUniformLocation(shaderProgram, "model");
-		// Calculate transformation
-        glm::mat4 trans, scale, model;
-		trans = glm::translate(glm::mat4(1.0f), (glm::vec3)getTransform()->position());
-		scale = glm::scale(trans, (glm::vec3)getTransform()->scale());
-        model = glm::rotate(
-            scale,
-            1.5f * Mathf::PI,
-            glm::vec3(0.0f, 1.0f, 0.0f)
-        );
-		
+        
+		glm::mat4 model = getTransform()->getMatrix();
         glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
 
 		// Set up projection

@@ -9,7 +9,7 @@ namespace Domino {
 
 	class Mesh : public Object {
 	public:
-		Mesh(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray);
+		Mesh(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elements);
 
 		Mesh(vector<float> verticeData, vector<uint32> elementData);
 
@@ -20,7 +20,7 @@ namespace Domino {
 
 		bool useIndex() const;
 	private:
-		void init(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray);
+		void init(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elements);
 
 		vector<float> verticeData;
 		vector<GLuint> elementData;

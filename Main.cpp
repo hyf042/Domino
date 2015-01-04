@@ -1,4 +1,5 @@
 #include "Domino/Domino.h"
+#include "Test/Movable.h"
 using namespace std;
 using namespace Domino;
 
@@ -21,8 +22,10 @@ void buildScene() {
 			obj->addComponent(MeshFilter::createSphereMesh(calculateLevelDetails(i, j)));
 			auto meshRenderer = shared_ptr<MeshRenderer>(new MeshRenderer(material));
 			obj->addComponent(meshRenderer);
+			obj->addComponent<Movable>();
 			obj->getTransform()->localPosition = Vector3(i * 2, j * 2, 5);
 			obj->getTransform()->localScale = Vector3(1.5f, 1.5f, 1.5f);
+			obj->getTransform()->localRotation = Vector3(0, 0, 0);
 		}
 	}
 }

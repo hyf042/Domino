@@ -33,6 +33,7 @@ namespace Domino {
 
 		friend Vector3 operator+(const Vector3 &a, const Vector3 &b);
 		friend Vector3 operator-(const Vector3 &a, const Vector3 &b);
+		friend Vector3 operator*(const Vector3 &a, const Vector3 &b);
 		friend Vector3 operator*(const Vector3 &a, double b);
 		friend Vector3 operator/(const Vector3 &a, double b);
 		static float dot(const Vector3 &a, const Vector3 &b);

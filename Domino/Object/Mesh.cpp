@@ -6,8 +6,8 @@ namespace Domino {
 	/**
 	 * Mesh
 	 **/
-	Mesh::Mesh(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray) {
-		init(vertices, colors, uvs, elementArray);
+	Mesh::Mesh(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elements) {
+		init(vertices, colors, uvs, elements);
 	}
 
 	Mesh::Mesh(vector<float> verticeData, vector<uint32> elementData) {
@@ -26,7 +26,7 @@ namespace Domino {
 		return elementData.size() > 0;
 	}
 
-	void Mesh::init(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elementArray) {
+	void Mesh::init(vector<Vector3> vertices, vector<Color> colors, vector<Vector2> uvs, vector<uint32> elements) {
 		uint32 n = vertices.size();
 		uint32 segmentSize = (3 + 3 + 2);
 		verticeData.resize(n * (3 + 3 + 2));
@@ -40,9 +40,9 @@ namespace Domino {
 			verticeData[i * segmentSize + 6] = uvs[i].x;
 			verticeData[i * segmentSize + 7] = uvs[i].y;
 		}
-		elementData.resize(elementArray.size());
-		for (uint32 i = 0; i < elementArray.size(); i++) {
-			elementData[i] = elementArray[i];
+		elementData.resize(elements.size());
+		for (uint32 i = 0; i < elements.size(); i++) {
+			elementData[i] = elements[i];
 		}
 	}
 
@@ -188,22 +188,22 @@ namespace Domino {
 			uint32* p = &elements[0];
 			for(i = 0; i < h-1; i++){
 				for(j = 0; j < w; j++){
-					(*(p++)) = (i+1)*w+j+1;
-					(*(p++)) = i*w+j+1;
-					(*(p++)) = i*w+j;
+					(*(p++)) = (i+1)*(w+1)+j+1;
+					(*(p++)) = i*(w+1)+j+1;
+					(*(p++)) = i*(w+1)+j;
 						
-					(*(p++)) = i*w+j;
-					(*(p++)) = (i+1)*w+j;
-					(*(p++)) = (i+1)*w+j+1;
+					(*(p++)) = i*(w+1)+j;
+					(*(p++)) = (i+1)*(w+1)+j;
+					(*(p++)) = (i+1)*(w+1)+j+1;
 				}
 					
-				(*(p++)) = (i+1)*w;
-				(*(p++)) = i*w;
-				(*(p++)) = i*w+j;
+				(*(p++)) = (i+1)*(w+1);
+				(*(p++)) = i*(w+1);
+				(*(p++)) = i*(w+1)+j;
 					
-				(*(p++)) = i*w+j;
-				(*(p++)) = (i+1)*w+j;
-				(*(p++)) = (i+1)*w;
+				(*(p++)) = i*(w+1)+j;
+				(*(p++)) = (i+1)*(w+1)+j;
+				(*(p++)) = (i+1)*(w+1);
 					
 			}
 

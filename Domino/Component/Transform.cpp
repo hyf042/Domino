@@ -9,12 +9,21 @@ namespace Domino {
 
 	void Transform::updateTransform() {
 		if (!parent) {
-			// rootObj do not update
-			return;
+			worldPosition = localPosition;
+			worldRotation = localRotation;
+			worldScale = localScale;
 		}
-		worldPosition = parent->getTransform()->position() + localPosition;
-		worldRotation = localRotation;
-		worldScale = localScale;
+		else {
+			worldPosition = parent->getTransform()->position() + localPosition;
+			worldRotation = parent->getTransform()->rotation() + localRotation;
+			worldScale = parent->getTransform()->scale() * localScale;
+		}
+
+		// Calculate transformation matrix
+		matrix = glm::mat4(1.0f);
+		matrix = glm::translate(matrix, (glm::vec3)worldPosition);
+		matrix = glm::scale(matrix, (glm::vec3)worldScale);
+		matrix = matrix * Quaternion::euler(worldRotation);
 	}
 
 	void Transform::addChild(TransformPtr child) {
