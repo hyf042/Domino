@@ -10,7 +10,7 @@ const int HEIGHT = 600;
 int calculateLevelDetails(int i, int j) {
 	int levelToDetails[] = {4, 8, 20};
 	int details = Mathf::abs(i) + Mathf::abs(j);
-	return levelToDetails[0];
+	return levelToDetails[1];
 }
 
 void buildScene() {

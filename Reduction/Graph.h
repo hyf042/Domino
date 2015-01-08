@@ -57,6 +57,9 @@ namespace Reduction {
 	private:
 		void deleteVertex(shared_ptr<Vertex> v);
 		void deleteTriangle(shared_ptr<Triangle> t);
+		// Add a triangle if it has 3 different vertices
+		void addTriangle(int vi1, int vi2, int vi3);
+		static bool checkDuplicate(const Vector3& a, const Vector3& b);
 	};
 	
 }

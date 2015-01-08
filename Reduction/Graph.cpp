@@ -4,6 +4,7 @@ namespace Reduction {
 
 	using std::min;
 	using std::max;
+	using Domino::Mathf;
 
 	Vertex::Vertex(Vector3 v, int id) {
 		position = v;
@@ -15,9 +16,6 @@ namespace Reduction {
 	}
 
 	Vertex::~Vertex() {
-		static int cnt = 0;
-		cnt++;
-		printf("%d vertex released\n", cnt);
 	}
 
 	void Vertex::removeIfNonNeighbor(shared_ptr<Vertex> v) {
@@ -59,15 +57,17 @@ namespace Reduction {
 	}
 
 	void Triangle::replaceVertex(shared_ptr<Vertex> vold, shared_ptr<Vertex> vnew) {
+		int oldIndex = 0;
 		for (int i = 0; i < 3; i++) {
 			if (vertex[i] == vold) {
 				vertex[i] = vnew;
+				oldIndex = i;
 				vnew->face.push_back(shared_from_this());
 				break;
 			}
 		}
 		for (int i = 0; i < 3; i++) {
-			if (vertex[i] != vold) {
+			if (i != oldIndex) {
 				vertex[i]->removeIfNonNeighbor(vold);
 				vertex[i]->addIfNonNeighbor(vnew);
 				vnew->addIfNonNeighbor(vertex[i]);
@@ -87,16 +87,43 @@ namespace Reduction {
 	Graph::~Graph() {
 	}
 
+	bool Graph::checkDuplicate(const Vector3& a, const Vector3& b) {
+		return Mathf::abs(a.x - b.x) < Mathf::EPS &&
+			Mathf::abs(a.y - b.y) < Mathf::EPS &&
+			Mathf::abs(a.z - b.z) < Mathf::EPS;
+	}
+
+	void Graph::addTriangle(int vi1, int vi2, int vi3) {
+		if (vi1 == vi2 || vi1 == vi3 || vi2 == vi3) {
+			return;
+		}
+		triangles.push_back(shared_ptr<Triangle>(new Triangle(vertices[vi1], vertices[vi2], vertices[vi3])));
+	}
+
 	void Graph::createGraph(const vector<Vector3>& ver, const vector<uint32>& elements) {
 		vertices.clear();
 		triangles.clear();
 
+		vector<int> verIndices;
+		int cnt = 0; // the size of vertices
 		for (int i = 0; i < ver.size(); i++) {
-			vertices.push_back(shared_ptr<Vertex>(new Vertex(ver[i], i)));
+			bool duplicated = false;
+			for (int j = 0; j < cnt; j++) {
+				if (checkDuplicate(ver[i], vertices[j]->position)) {
+					duplicated = true;
+					verIndices.push_back(j);
+					break;
+				}
+			}
+			if (!duplicated) {
+				vertices.push_back(shared_ptr<Vertex>(new Vertex(ver[i], i)));
+				verIndices.push_back(cnt);
+				cnt++;
+			}
 		}
 
 		for (int i = 0; i < elements.size() / 3; i++) {
-			triangles.push_back(shared_ptr<Triangle>(new Triangle(vertices[elements[3*i]], vertices[elements[3*i+1]], vertices[elements[3*i+2]])));
+			addTriangle(verIndices[elements[3*i]], verIndices[elements[3*i+1]], verIndices[elements[3*i+2]]);
 		}
 
 		// generate neighbor information

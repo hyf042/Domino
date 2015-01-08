@@ -16,8 +16,7 @@ void PolyRed::update() {
 	clonedMesh->getOriginVerticesData(vertices, colors, uvs, elements);
 
 	graph->createGraph(vertices, elements);
-	float ratio = 0.5f;
-	int desNum = graph->vertices.size() * ratio;
+	int desNum = graph->vertices.size() / 2;
 	while (graph->vertices.size() > desNum) {
 		auto u = findMinCostVertex();
 		graph->collapse(u, u->collapse);
