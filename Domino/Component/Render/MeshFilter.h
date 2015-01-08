@@ -20,6 +20,7 @@ namespace Domino {
 	public:
 		static shared_ptr<MeshFilter> createCubeMesh();
 		static shared_ptr<MeshFilter> createSphereMesh(uint32 slices = 20);
+		static shared_ptr<MeshFilter> createSurfaceMesh();
 		static shared_ptr<MeshFilter> fromSharedMesh(shared_ptr<Mesh> sharedMesh);
 		static shared_ptr<MeshFilter> fromMeshClone(shared_ptr<Mesh> mesh);
 	};

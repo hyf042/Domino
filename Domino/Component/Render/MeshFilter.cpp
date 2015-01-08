@@ -18,6 +18,10 @@ namespace Domino {
 		return fromSharedMesh(MeshImporter::sharedSphereMesh(slices));
 	}
 
+	shared_ptr<MeshFilter> MeshFilter::createSurfaceMesh() {
+		return fromSharedMesh(MeshImporter::sharedSurfaceMesh());
+	}
+
 	shared_ptr<MeshFilter> MeshFilter::fromSharedMesh(shared_ptr<Mesh> sharedMesh) {
 		shared_ptr<MeshFilter> meshFilter = shared_ptr<MeshFilter>(new MeshFilter());
 		meshFilter->sharedMesh = sharedMesh;

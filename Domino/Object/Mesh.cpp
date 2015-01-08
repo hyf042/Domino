@@ -22,6 +22,32 @@ namespace Domino {
 		return elementData;
 	}
 
+	void Mesh::getOriginVerticesData(vector<Vector3>& vertices, vector<Color>& colors, vector<Vector2>& uvs, vector<uint32>& elements) {
+		uint32 segmentSize = (3 + 3 + 2);
+		uint32 n = verticeData.size() / segmentSize;
+		vertices.resize(n);
+		colors.resize(n);
+		uvs.resize(n);
+		for (uint32 i = 0; i < n; i++) {
+			vertices[i].x = verticeData[i * segmentSize + 0];
+			vertices[i].y = verticeData[i * segmentSize + 1];
+			vertices[i].z = verticeData[i * segmentSize + 2];
+			colors[i].r = verticeData[i * segmentSize + 3];
+			colors[i].g = verticeData[i * segmentSize + 4];
+			colors[i].b = verticeData[i * segmentSize + 5];
+			uvs[i].x = verticeData[i * segmentSize + 6];
+			uvs[i].y = verticeData[i * segmentSize + 7];
+		}
+		elements.resize(elementData.size());
+		for (uint32 i = 0; i < elementData.size(); i++) {
+			elements[i] = elementData[i];
+		}
+	}
+
+	void Mesh::setOriginVerticesData(const vector<Vector3>& vertices, const vector<Color>& colors, const vector<Vector2>& uvs, const vector<uint32>& elements) {
+		init(vertices, colors, uvs, elements);
+	}
+
 	bool Mesh::useIndex() const {
 		return elementData.size() > 0;
 	}
