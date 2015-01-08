@@ -56,6 +56,10 @@ namespace Domino {
 			return sqrtf(f);
 		}
 
+		static float sqr(float f) {
+			return pow(f, 2.0f);
+		}
+
 		static float sin(float f) {
 			return sinf(f);
 		}
@@ -66,6 +70,10 @@ namespace Domino {
 
 		static float tan(float f) {
 			return tanf(f);
+		}
+
+		static float atan2(float y, float x) {
+			return atan2f(y, x);
 		}
 	};
 

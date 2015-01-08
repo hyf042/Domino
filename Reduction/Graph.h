@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../Domino/Domino.h"
 
 namespace Reduction {

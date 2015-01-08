@@ -36,6 +36,7 @@ namespace Domino {
 		float targetDeltaTime = 1000/targetFPS;
 
 		glutDisplayFunc(drawCB);
+		glutMouseFunc(mouseCB);
 		glutTimerFunc(targetDeltaTime, timerCB, targetDeltaTime);
 		glutReshapeFunc(reshapeCB);
 
@@ -67,6 +68,11 @@ namespace Domino {
 		onUpdate();
 
 		GameObject::doDestroy();
+	}
+
+	void Application::mouseCB(int button, int state, int x, int y) {
+		instance()->mousex = x;
+		instance()->mousey = y;
 	}
 
 	void Application::drawCB() {

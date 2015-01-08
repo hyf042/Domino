@@ -186,7 +186,7 @@ namespace Domino {
 	shared_ptr<Mesh> MeshImporter::sharedSphereMesh(uint32 slices){
 		static std::map<uint32, shared_ptr<Mesh> > meshs; 
 		if(meshs.find(slices) == meshs.end()){
-			float radius = 0.5f;
+			float radius = 2.25f;
 
 			int w=2*slices, h=slices;
 			float hStep = 180.0 / (h-1);

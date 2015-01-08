@@ -38,6 +38,8 @@ namespace Domino {
 		friend Vector3 operator/(const Vector3 &a, double b);
 		static float dot(const Vector3 &a, const Vector3 &b);
 		static Vector3 cross(const Vector3 &a, const Vector3 &b) ;
+		// Calculate the distant between d and the line consist by v1 and v2
+		static float dotToLineDistant(const Vector3& d, const Vector3& v1, const Vector3& v2);
 
 		void setValue(float x, float y, float z) {
 			this->x = x;
