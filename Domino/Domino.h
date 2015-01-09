@@ -51,6 +51,7 @@ typedef short int16;
 #include "Component/MonoBehaviour.h"
 
 #include "Object/Scene.h"
+#include "Core/Input.h"
 #include "Core/Application.h"
 
 #endif

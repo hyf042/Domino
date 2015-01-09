@@ -75,6 +75,10 @@ namespace Domino {
 		static float atan2(float y, float x) {
 			return atan2f(y, x);
 		}
+
+		static bool equals(float x, float y) {
+			return fabs(x - y) < EPS;
+		}
 	};
 
 }

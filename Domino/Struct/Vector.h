@@ -16,6 +16,9 @@ namespace Domino {
 		Vector2():x(0), y(0) {}
 		Vector2(float x, float y):x(x), y(y) {}
 		friend Vector2 operator+(const Vector2 &a, const Vector2 &b);
+		friend bool operator==(const Vector2 &a, const Vector2 &b) {
+			return Mathf::equals(a.x, b.x) && Mathf::equals(a.y, b.y);
+		}
 
 		void setValue(float x, float y) {
 			this->x = x;
@@ -36,6 +39,9 @@ namespace Domino {
 		friend Vector3 operator*(const Vector3 &a, const Vector3 &b);
 		friend Vector3 operator*(const Vector3 &a, double b);
 		friend Vector3 operator/(const Vector3 &a, double b);
+		friend bool operator==(const Vector3 &a, const Vector3 &b) {
+			return Mathf::equals(a.x, b.x) && Mathf::equals(a.y, b.y) && Mathf::equals(a.z, b.z);
+		}
 		static float dot(const Vector3 &a, const Vector3 &b);
 		static Vector3 cross(const Vector3 &a, const Vector3 &b) ;
 		// Calculate the distant between d and the line consist by v1 and v2

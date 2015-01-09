@@ -21,8 +21,9 @@ void buildScene() {
 	obj->addComponent(MeshFilter::createSphereMesh(calculateLevelDetails(0, 0)));
 	//obj->addComponent(MeshFilter::createSurfaceMesh());
 	auto meshRenderer = shared_ptr<MeshRenderer>(new MeshRenderer(material));
+	meshRenderer->setIsWireframe(true);
 	obj->addComponent(meshRenderer);
-	//obj->addComponent<Movable>();
+	obj->addComponent<Movable>();
 	obj->getTransform()->localPosition = Vector3(0, 0, 5);
 	obj->getTransform()->localScale = Vector3(1.0f, 1.0f, 1.0f);
 	//obj->getTransform()->localRotation = Vector3(-Mathf::PI / 2, 0, 0);

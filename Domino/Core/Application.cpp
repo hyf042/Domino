@@ -37,6 +37,8 @@ namespace Domino {
 
 		glutDisplayFunc(drawCB);
 		glutMouseFunc(mouseCB);
+		glutKeyboardFunc(keyboardCB);
+		glutKeyboardUpFunc(keyboardUpCB);
 		glutTimerFunc(targetDeltaTime, timerCB, targetDeltaTime);
 		glutReshapeFunc(reshapeCB);
 
@@ -62,17 +64,24 @@ namespace Domino {
 	}
 
 	void Application::update() {
-		//mesh->update();
 		GameObject::doStart();
 
+		Input::instance()->update();
 		onUpdate();
 
 		GameObject::doDestroy();
 	}
 
 	void Application::mouseCB(int button, int state, int x, int y) {
-		instance()->mousex = x;
-		instance()->mousey = y;
+		Input::instance()->mouseCB(button, state, x, y);
+	}
+
+	void Application::keyboardCB(unsigned char key, int x, int y) {
+		Input::instance()->keyboardCB(key, x, y);
+	}
+
+	void Application::keyboardUpCB(unsigned char key, int x, int y) {
+		Input::instance()->keyboardUpCB(key, x, y);
 	}
 
 	void Application::drawCB() {

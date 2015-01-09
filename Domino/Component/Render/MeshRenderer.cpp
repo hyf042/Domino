@@ -38,6 +38,10 @@ namespace Domino {
 		setLayout(shader);
 		setMatrix(shader);
 
+		if (isWireframe) {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		}
+
 		if (mesh->useIndex()) {
 			auto elements = mesh->getElementsData();
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -47,6 +51,7 @@ namespace Domino {
 		else {
 			glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 		}
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	}
 
 	void MeshRenderer::setLayout(shared_ptr<Shader> shader) {

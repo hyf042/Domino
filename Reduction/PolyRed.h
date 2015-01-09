@@ -5,7 +5,8 @@
 #include "../Domino/Domino.h"
 using namespace Domino;
 
-class PolyRed : public Behaviour {
+class PolyRed : public MonoBehaviour {
+	Vector2 lastMousePos;
 public:
 	shared_ptr<Mesh> mesh;
 	shared_ptr<Mesh> clonedMesh;

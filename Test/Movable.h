@@ -4,6 +4,11 @@ using namespace Domino;
 class Movable : public Behaviour {
 public:
 	void update() override {
-		getTransform()->localRotation.y = Mathf::fmod(Mathf::PI * 2 * Time::time / 5, Mathf::PI * 2);
+		if (Input::instance()->getKeyDown('z')) {
+			getTransform()->localRotation.y -= Time::deltaTime / 5 * Mathf::PI;
+		}
+		if (Input::instance()->getKeyDown('x')) {
+			getTransform()->localRotation.y += Time::deltaTime / 5 * Mathf::PI;
+		}
 	}
 };

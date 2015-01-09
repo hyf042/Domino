@@ -9,6 +9,14 @@ void PolyRed::start() {
 }
 
 void PolyRed::update() {
+	Vector2 mousePos(
+		Input::instance()->getMouseX(),
+		Input::instance()->getMouseY());
+	if (mousePos == lastMousePos) {
+		return;
+	}
+	lastMousePos = mousePos;
+
 	vector<Vector3> vertices;
 	vector<Color> colors;
 	vector<Vector2> uvs;
@@ -18,8 +26,9 @@ void PolyRed::update() {
 	Vector3::dotToLineDistant(Vector3(2,2,2), Vector3(1,1,1), Vector3(0,0,0));
 	graph->createGraph(vertices, elements);
 	VertexPicker picker;
-	Vector3 mousep = getMouseGlobalPosition(Application::instance()->getMouseX(),
-		Application::instance()->getMouseY());
+	Vector3 mousep = getMouseGlobalPosition(
+		Input::instance()->getMouseX(),
+		Input::instance()->getMouseY());
 	// TODO: need delete this
 	mousep.x = -mousep.x;
 	for (int i = 0; i < graph->vertices.size(); i++) {
@@ -78,8 +87,9 @@ float PolyRed::calcPenalty(float distant) {
 shared_ptr<Vertex> PolyRed::findMinCostVertex() {
 	shared_ptr<Vertex> v = nullptr;
 	float c = 1000000;
-	Vector3 mousep = getMouseGlobalPosition(Application::instance()->getMouseX(),
-		Application::instance()->getMouseY());
+	Vector3 mousep = getMouseGlobalPosition(
+		Input::instance()->getMouseX(),
+		Input::instance()->getMouseY());
 	
 	for (int i = 0; i < graph->vertices.size(); i++) {
 		float dist = Vector3::dotToLineDistant(graph->vertices[i]->position, mousep, Vector3());

@@ -11,8 +11,6 @@ namespace Domino {
 		shared_ptr<Scene> activeScene;
 		int width;
 		int height;
-		int mousex;
-		int mousey;
 
 		Application() {}
 	public:
@@ -28,14 +26,6 @@ namespace Domino {
 		}
 		int getHeight() const {
 			return height;
-		}
-
-		int getMouseX() const {
-			return mousex;
-		}
-
-		int getMouseY() const {
-			return mousey;
 		}
 
 		void setUp(string title, int width, int height, int argc, char **argv);
@@ -58,6 +48,8 @@ namespace Domino {
 		static void reshapeCB(int width, int height);
 		static void timerCB(int ms);
 		static void mouseCB(int button, int state, int x, int y);
+		static void keyboardCB(unsigned char key, int x, int y);
+		static void keyboardUpCB(unsigned char key, int x, int y);
 	};
 }
 
