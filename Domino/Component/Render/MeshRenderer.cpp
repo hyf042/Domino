@@ -91,8 +91,8 @@ namespace Domino {
 		glm::mat4 proj = glm::perspective(
 			45.0f, 
 			(float)Application::instance()->getWidth() / Application::instance()->getHeight(), 
-			1.0f, 
-			10.0f);
+			0.1f, 
+			10000.0f);
 		GLint uniProj = glGetUniformLocation(shaderProgram, "proj");
 		glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
 	}

@@ -1,6 +1,6 @@
 #include "Domino/Domino.h"
 #include "Test/Movable.h"
-#include "Reduction\PolyRed.h"
+#include "Reduction/PolyRed.h"
 using namespace std;
 using namespace Domino;
 
@@ -14,18 +14,19 @@ int calculateLevelDetails(int i, int j) {
 }
 
 void buildScene() {
-	auto texture = shared_ptr<Texture>(new Texture("earth.jpg"));
+	auto texture = shared_ptr<Texture>(new Texture("MechPatrolbot.png"));
 	auto material = shared_ptr<Material>(new Material(texture));
 
 	auto obj = GameObject::createNew();
-	obj->addComponent(MeshFilter::createSphereMesh(calculateLevelDetails(0, 0)));
+	//obj->addComponent(MeshFilter::createSphereMesh(calculateLevelDetails(0, 0)));
+	obj->addComponent(MeshFilter::fromSharedMesh(MeshImporter::createFromFBX("mech_bot.FBX")));
 	//obj->addComponent(MeshFilter::createSurfaceMesh());
 	auto meshRenderer = shared_ptr<MeshRenderer>(new MeshRenderer(material));
-	meshRenderer->setIsWireframe(true);
+	//meshRenderer->setIsWireframe(true);
 	obj->addComponent(meshRenderer);
 	obj->addComponent<Movable>();
-	obj->getTransform()->localPosition = Vector3(0, 0, 5);
-	obj->getTransform()->localScale = Vector3(1.0f, 1.0f, 1.0f);
+	obj->getTransform()->localPosition = Vector3(0, 0, 250);
+	obj->getTransform()->localScale = Vector3(1, 1, 1);
 	//obj->getTransform()->localRotation = Vector3(-Mathf::PI / 2, 0, 0);
 	obj->getTransform()->localRotation = Vector3(0, 0, 0);
 			

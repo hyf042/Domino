@@ -6,7 +6,7 @@
 namespace Domino {
 	using std::shared_ptr;
 
-	class Component {
+	class Component : public Object {
 	protected:
 		shared_ptr<GameObject> gameObject;
 	public:

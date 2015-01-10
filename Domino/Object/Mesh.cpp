@@ -1,3 +1,4 @@
+#include <fbxsdk.h>
 #include "../Domino.h"
 
 namespace Domino {
@@ -204,8 +205,7 @@ namespace Domino {
 				for(b=0.0,j=0;j<=w;j++,b+=wStep){
 					buildSphereVertex(radius, Mathf::deg2Rad(a), Mathf::deg2Rad(b), vertices[i*(w+1)+j], normals[i*(w+1)+j]);
 					colors[i*(w+1)+j].setValue(1,1,1);
-					uvs[i*(w+1)+j].x = 1-b/360.0f;
-					uvs[i*(w+1)+j].y = a/180.0f;
+					uvs[i*(w+1)+j].setValue(0, 0);
 				}
 			}
 
@@ -272,4 +272,96 @@ namespace Domino {
 		}
 		return mesh;
 	}
+
+	void importFBXNode(
+		FbxNode *node, 
+		vector<Vector3> &vertices, 
+		vector<Color> &colors, 
+		vector<Vector2> &uvs, 
+		vector<Vector3> &normals,
+		vector<uint32> &elements) {
+
+		FbxNode *childNode = 0;
+		int numKids = node->GetChildCount();
+		for ( int i=0 ; i<numKids ; i++)
+		{
+			childNode = node->GetChild(i);
+			FbxMesh *mesh = childNode->GetMesh();
+
+			if ( mesh != NULL )
+			{
+				auto offset = node->GetGeometricTranslation(FbxNode::eSourcePivot);
+
+				//================= Get Vertices ====================================
+				int baseline = vertices.size();
+				int numVerts = mesh->GetControlPointsCount();
+
+				for ( int j=0; j<numVerts; j++)
+				{
+					FbxVector4 vert = mesh->GetControlPointAt(j);
+					vertices.push_back(
+						Vector3(vert.mData[0], vert.mData[1], vert.mData[2])
+						/*+ Vector3(offset.mData[0], offset.mData[1], offset.mData[2])*/);
+					colors.push_back(Vector3(1, 1, 1));
+					uvs.push_back(Vector2(0, 0));
+				}
+
+				//================= Get Indices ====================================
+				int numIndices=mesh->GetPolygonVertexCount();
+				int *indicesRaw = mesh->GetPolygonVertices();
+				for (int i = 0; i < numIndices; i++) {
+					elements.push_back(indicesRaw[i] + baseline);
+				}
+
+				int cnt = 0;
+				int polygonCount = mesh->GetPolygonCount();
+				for (int i = 0; i < polygonCount; ++i) {
+
+					FbxLayerElementArrayTemplate<FbxVector2>* uvVertices= 0;
+					mesh->GetTextureUV(&uvVertices, FbxLayerElement::eTextureDiffuse);
+
+					for (int j = 0; j < mesh->GetPolygonSize(i); ++j) {
+
+						FbxVector2 uv = (*uvVertices)[mesh->GetTextureUVIndex(i, j)];
+
+						uvs[indicesRaw[cnt] + baseline].x = uv[0];
+						uvs[indicesRaw[cnt] + baseline].y = uv[1];
+						cnt++;
+					}
+				}
+			}
+
+			importFBXNode(childNode, vertices, colors, uvs, normals, elements);
+		}
+	}
+
+	shared_ptr<Mesh> MeshImporter::createFromFBX(string filename) {
+		FbxManager *manager = FbxManager::Create();
+
+		FbxIOSettings *ioSettings = FbxIOSettings::Create(manager, IOSROOT);
+		manager->SetIOSettings(ioSettings);
+
+		FbxImporter *importer = FbxImporter::Create(manager, "");
+		importer->Initialize(filename.c_str(), -1, manager->GetIOSettings());
+
+		FbxScene *scene = FbxScene::Create(manager, "tempName");
+
+		importer->Import(scene);
+		importer->Destroy();
+
+		FbxNode* rootNode = scene->GetRootNode();
+
+		if(rootNode) {
+			vector<Vector3> vertices;
+			vector<Color> colors;
+			vector<Vector2> uvs; 
+			vector<Vector3> normals;
+			vector<uint32> elements;
+			importFBXNode(rootNode, vertices, colors, uvs, normals, elements);
+			return shared_ptr<Mesh>(new Mesh(vertices, colors, uvs, elements));
+		}
+
+		return nullptr;
+	}
+
 }

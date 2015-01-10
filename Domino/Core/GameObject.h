@@ -16,7 +16,6 @@ namespace Domino {
 		public Object, 
 		public std::enable_shared_from_this<GameObject> {
 	protected:
-		string name;
 		shared_ptr<Transform> transform;
 		shared_ptr<Renderer> renderer;
 		vector<shared_ptr<Component> > components;
@@ -27,9 +26,6 @@ namespace Domino {
 	public:
 		virtual ~GameObject();
 
-		string getName() const {
-			return name;
-		}
 		shared_ptr<Transform> getTransform() {
 			return transform;
 		}
