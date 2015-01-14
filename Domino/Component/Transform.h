@@ -60,7 +60,9 @@ namespace Domino {
 		Vector3 scale() const {
 			return worldScale;
 		}
-		glm::mat4 getMatrix() const {
+		Vector3 forward() const;
+		Vector3 up() const;
+		glm::mat4 getModelMatrix() const {
 			return matrix;
 		}
 

@@ -9,6 +9,15 @@ void PolyRed::start() {
 }
 
 void PolyRed::update() {
+	// from model to view:
+	//   proj * view * model * p = p'
+	// from view to model:
+	//   model-1  * view-1 * proj-1 * p' = p
+	/*auto modelMatrix = gameObject->getTransform()->getModelMatrix();
+	auto viewMatrix = gameObject->getCamera()->getViewMatrix();
+	auto projMatrix = gameObject->getCamera()->getProjectionMatrix();
+	auto invModelMatrix = glm::inverse(modelMatrix);*/
+
 	Vector2 mousePos(
 		Input::instance()->getMouseX(),
 		Input::instance()->getMouseY());

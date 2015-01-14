@@ -73,4 +73,16 @@ namespace Domino {
 	bool Transform::isChildOf(TransformPtr transform) {
 		return std::find(children.begin(), children.end(), transform) == children.end();
 	}
+
+	Vector3 Transform::forward() const {
+		Vector3 forwardTo = (glm::vec3)(matrix * glm::vec4(0, 0, 1, 1));
+		Vector3 zeroAt = (glm::vec3)(matrix * glm::vec4(0, 0, 0, 1));
+		return (forwardTo - zeroAt).normalize();
+	}
+
+	Vector3 Transform::up() const {
+		Vector3 upTo = (glm::vec3)(matrix * glm::vec4(0, 1, 0, 1));
+		Vector3 zeroAt = (glm::vec3)(matrix * glm::vec4(0, 0, 0, 1));
+		return (upTo - zeroAt).normalize();
+	}
 }

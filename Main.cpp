@@ -17,6 +17,9 @@ void buildScene() {
 	auto texture = shared_ptr<Texture>(new Texture("MechPatrolbot.png"));
 	auto material = shared_ptr<Material>(new Material(texture));
 
+	auto camera = GameObject::createNew();
+	camera->addComponent<Camera>();
+
 	auto obj = GameObject::createNew();
 	//obj->addComponent(MeshFilter::createSphereMesh(calculateLevelDetails(0, 0)));
 	obj->addComponent(MeshFilter::fromSharedMesh(MeshImporter::createFromFBX("mech_bot.FBX")));

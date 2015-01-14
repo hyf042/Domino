@@ -44,6 +44,7 @@ typedef short int16;
 
 #include "Component/Component.h"
 #include "Component/Transform.h"
+#include "Component/Render/Camera.h"
 #include "Component/Render/MeshFilter.h"
 #include "Component/Render/Renderer.h"
 #include "Component/Render/MeshRenderer.h"

@@ -75,6 +75,23 @@ namespace Domino {
 			this->w = w;
 		}
 	};
+
+	struct Rect : public Vector4 {
+		Rect():Vector4() {}
+		Rect(float x, float y, float w, float h):Vector4(x, y, x + w, y + h) {}
+		static Rect minMaxRect(float xMin, float yMin, float xMax, float yMax) {
+			return Rect(xMin, yMin, xMax - xMin, yMax - yMin);
+		}
+		float getWidth() const {
+			return z - x;
+		}
+		float getHeight() const {
+			return w - y;
+		}
+		void setWH(float x, float y, float w, float h) {
+			setValue(x, y, x + w, y + h);
+		}
+	};
 }
 
 #endif

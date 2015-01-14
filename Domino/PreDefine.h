@@ -6,6 +6,7 @@ namespace Domino {
 	struct Vector2;
 	struct Vector3;
 	struct Vector4;
+	struct Rect;
 	struct Color;
 	struct Quaternion;
 
@@ -20,6 +21,7 @@ namespace Domino {
 
 	class Component;
 	class Transform;
+	class Camera;
 	class MeshFilter;
 	class Renderer;
 	class MeshRenderer;

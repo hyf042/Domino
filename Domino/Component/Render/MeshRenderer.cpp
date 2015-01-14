@@ -16,7 +16,7 @@ namespace Domino {
 	}
 
 	void MeshRenderer::render() {
-		if (!getMaterial()) {
+		if (!getMaterial() || !Camera::getMainCamera()) {
 			return;
 		}
 		auto meshFilter = getGameObject()->getComponent<MeshFilter>();
@@ -76,24 +76,13 @@ namespace Domino {
 
 		GLint uniModel = glGetUniformLocation(shaderProgram, "model");
         
-		glm::mat4 model = getTransform()->getMatrix();
-        glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(model));
+		glm::mat4 model = getTransform()->getModelMatrix();
+        glUniformMatrix4fv(uniModel, 1, GL_FALSE, glm::value_ptr(getTransform()->getModelMatrix()));
 
-		// Set up projection
-		glm::mat4 view = glm::lookAt(
-			glm::vec3(0.0f, 0.0f, 0.0f),
-			glm::vec3(0.0f, 0.0f, 1.0f),
-			glm::vec3(0.0f, 1.0f, 0.0f)
-		);
 		GLint uniView = glGetUniformLocation(shaderProgram, "view");
-		glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(uniView, 1, GL_FALSE, glm::value_ptr(Camera::getMainCamera()->getViewMatrix()));
 
-		glm::mat4 proj = glm::perspective(
-			45.0f, 
-			(float)Application::instance()->getWidth() / Application::instance()->getHeight(), 
-			0.1f, 
-			10000.0f);
 		GLint uniProj = glGetUniformLocation(shaderProgram, "proj");
-		glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(proj));
+		glUniformMatrix4fv(uniProj, 1, GL_FALSE, glm::value_ptr(Camera::getMainCamera()->getProjectionMatrix()));
 	}
 }

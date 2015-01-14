@@ -11,6 +11,7 @@ namespace Domino {
 	class Component;
 	class Transform;
 	class Renderer;
+	class Camera;
 
 	class GameObject : 
 		public Object, 
@@ -18,6 +19,7 @@ namespace Domino {
 	protected:
 		shared_ptr<Transform> transform;
 		shared_ptr<Renderer> renderer;
+		shared_ptr<Camera> camera;
 		vector<shared_ptr<Component> > components;
 		bool active;
 
@@ -26,12 +28,13 @@ namespace Domino {
 	public:
 		virtual ~GameObject();
 
-		shared_ptr<Transform> getTransform() {
+		shared_ptr<Transform> getTransform() const {
 			return transform;
 		}
-		shared_ptr<Renderer> getRenderer() {
+		shared_ptr<Renderer> getRenderer() const {
 			return renderer;
 		}
+		shared_ptr<Camera> getCamera() const;
 
 		void setActive(bool active) {
 			this->active = active;

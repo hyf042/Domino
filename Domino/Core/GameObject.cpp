@@ -13,6 +13,14 @@ namespace Domino {
 		transform->setParent(nullptr);
 	}
 
+	shared_ptr<Camera> GameObject::getCamera() const {
+		if (camera) {
+			return camera;
+		} else {
+			return Camera::getMainCamera();
+		}
+	}
+
 	shared_ptr<Component> GameObject::addComponent(shared_ptr<Component> comp) {
 		if (std::find(components.begin(), components.end(), comp) != components.end()) {
 			return nullptr;
@@ -24,9 +32,13 @@ namespace Domino {
 		components.push_back(comp);
 
 		const type_info &typeinfo = typeid(*comp);
-		if(typeinfo==typeid(Renderer)
-			||typeinfo==typeid(MeshRenderer))
+		if (typeinfo==typeid(Renderer)
+			||typeinfo==typeid(MeshRenderer)) {
 			renderer = std::dynamic_pointer_cast<Renderer>(comp);
+		} else if (typeinfo==typeid(Camera)) {
+			camera = std::dynamic_pointer_cast<Camera>(comp);
+			Camera::setMainCamera(camera);
+		}
 
 		comp->awake();
 		return comp;

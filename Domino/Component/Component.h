@@ -6,6 +6,8 @@
 namespace Domino {
 	using std::shared_ptr;
 
+	class Camerea;
+
 	class Component : public Object {
 	protected:
 		shared_ptr<GameObject> gameObject;
@@ -17,7 +19,13 @@ namespace Domino {
 			return gameObject->getName();
 		}
 		shared_ptr<Transform> getTransform() const {
-			return getGameObject()->getTransform();
+			return gameObject->getTransform();
+		}
+		shared_ptr<Renderer> getRenderer() const {
+			return gameObject->getRenderer();
+		}
+		shared_ptr<Camera> getCamera() const {
+			return gameObject->getCamera();
 		}
 
 		void setGameObject(shared_ptr<GameObject> gameObject);
