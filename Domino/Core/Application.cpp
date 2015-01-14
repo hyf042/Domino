@@ -66,8 +66,8 @@ namespace Domino {
 	void Application::update() {
 		GameObject::doStart();
 
-		Input::instance()->update();
 		onUpdate();
+		Input::instance()->afterUpdate();
 
 		GameObject::doDestroy();
 	}

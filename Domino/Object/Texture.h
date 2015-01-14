@@ -12,6 +12,8 @@ namespace Domino {
 		Texture(string filename) {
 			// Load texture
 			glGenTextures(1, &textureId);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, textureId);
 
 			unsigned char* image = SOIL_load_image(filename.c_str(), &width, &height, 0, SOIL_LOAD_RGB);
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -24,6 +26,10 @@ namespace Domino {
 		}
 		~Texture() {
 			glDeleteTextures(1, &textureId);
+		}
+
+		void use() {
+			glBindTexture(GL_TEXTURE_2D, textureId);
 		}
 
 		uint32 getWidth() const {

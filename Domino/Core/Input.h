@@ -10,6 +10,7 @@ namespace Domino {
 		int mouseX;
 		int mouseY;
 		std::set<unsigned char> keyDown;
+		std::set<unsigned char> keyPress;
 
 		Input() {}
 	public:
@@ -30,7 +31,13 @@ namespace Domino {
 			return keyDown.find(key) != keyDown.end();
 		}
 
-		void update() {}
+		bool getKeyPressed(unsigned char key) const {
+			return keyPress.find(key) != keyPress.end();
+		}
+
+		void afterUpdate() {
+			keyPress.clear();
+		}
 
 	private:
 		void mouseCB(int button, int state, int x, int y) {
@@ -39,6 +46,9 @@ namespace Domino {
 		}
 
 		void keyboardCB(unsigned char key, int x, int y) {
+			if (keyDown.find(key) == keyDown.end()) {
+				keyPress.insert(key);
+			}
 			keyDown.insert(key);
 		}
 

@@ -10,4 +10,9 @@ namespace Domino {
 	}
 	Material::Material(shared_ptr<Shader> shader, shared_ptr<Texture> texture)
 		:shader(shader), mainTexture(texture) {}
+
+	void Material::use() {
+		shader->use();
+		mainTexture->use();
+	}
 }

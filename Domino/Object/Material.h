@@ -13,6 +13,7 @@ namespace Domino {
 		Material(shared_ptr<Shader> shader);
 		Material(shared_ptr<Shader> shader, shared_ptr<Texture> texture);
 
+		void use();
 		shared_ptr<Shader> getShader() {
 			return shader;
 		}

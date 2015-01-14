@@ -21,6 +21,7 @@ void PolyRed::update() {
 	Vector2 mousePos(
 		Input::instance()->getMouseX(),
 		Input::instance()->getMouseY());
+
 	if (mousePos == lastMousePos) {
 		return;
 	}
@@ -32,17 +33,17 @@ void PolyRed::update() {
 	vector<uint32> elements;
 	clonedMesh->getOriginVerticesData(vertices, colors, uvs, elements);
 
-	Vector3::dotToLineDistant(Vector3(2,2,2), Vector3(1,1,1), Vector3(0,0,0));
 	graph->createGraph(vertices, elements);
 	VertexPicker picker;
-	Vector3 mousep = getMouseGlobalPosition(
-		Input::instance()->getMouseX(),
-		Input::instance()->getMouseY());
-	// TODO: need delete this
-	mousep.x = -mousep.x;
+	Vector3 gMousePos = getMouseGlobalPosition(mousePos.x, mousePos.y);
+
 	for (int i = 0; i < graph->vertices.size(); i++) {
-		// TODO: need modify 5.0f;
-		picker.addVertex(graph->vertices[i], Vector3::dotToLineDistant(graph->vertices[i]->position + Vector3(0.0f, 0.0f, 5.0f), mousep, Vector3()));
+		Vector3 tPos = graph->vertices[i]->position;
+		glm::vec4 originPos(tPos.x, tPos.y, tPos.z, 1.0f);
+		glm::vec4 globalPos = getTransform()->getModelMatrix() * originPos;
+		Vector3 truePos(globalPos.x, globalPos.y, globalPos.z);
+		picker.addVertex(graph->vertices[i], Vector3::dotToLineDistant(truePos,
+			gMousePos, Vector3()));
 	}
 	float gi[] = {0.2f, 0.5f, 1.0f};
 	float pp[] = {0.0f, 0.2f, 1.0f};
@@ -115,11 +116,16 @@ shared_ptr<Vertex> PolyRed::findMinCostVertex() {
 }
 
 Vector3 PolyRed::getMouseGlobalPosition(int mousex, int mousey) {
-	float px = mousex - Application::instance()->getWidth() / 2;
-	float py = -(mousey - Application::instance()->getHeight() / 2);
-	float nearDis = 1.0f;
-	float fov = 44.5f;
-	// TODO: need delete 1.442
-	float ratio = 2 * nearDis * 1.442 * Mathf::tan(Mathf::deg2Rad(fov / 2)) / Application::instance()->getHeight();
-	return Vector3(px * ratio, py * ratio, nearDis);
+	float halfWidth = Application::instance()->getWidth() / 2;
+	float halfHeight = Application::instance()->getHeight() / 2;
+	float px = (mousex - halfWidth) / halfWidth;
+	float py = -(mousey - halfHeight) / halfHeight;
+	//float nearDis = 1.0f;
+	//float fov = 44.5f;
+	//float ratio = 2 * nearDis * 1.442 * Mathf::tan(Mathf::deg2Rad(fov / 2)) / Application::instance()->getHeight();
+	//return Vector3(px * ratio, py * ratio, nearDis);
+	glm::vec4 screenMouse(px, py, 0.0f, 1.0f);
+	glm::vec4 globalMouse = glm::inverse(Camera::getMainCamera()->getViewMatrix()) *
+		glm::inverse(Camera::getMainCamera()->getProjectionMatrix()) * screenMouse;
+	return Vector3(globalMouse.x, globalMouse.y, globalMouse.z);
 }

@@ -33,8 +33,8 @@ namespace Domino {
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 
+		getMaterial()->use();
 		auto shader = getMaterial()->getShader();
-		shader->use();
 		setLayout(shader);
 		setMatrix(shader);
 

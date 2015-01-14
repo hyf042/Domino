@@ -205,7 +205,7 @@ namespace Domino {
 				for(b=0.0,j=0;j<=w;j++,b+=wStep){
 					buildSphereVertex(radius, Mathf::deg2Rad(a), Mathf::deg2Rad(b), vertices[i*(w+1)+j], normals[i*(w+1)+j]);
 					colors[i*(w+1)+j].setValue(1,1,1);
-					uvs[i*(w+1)+j].setValue(0, 0);
+					uvs[i*(w+1)+j].setValue(1-b/360.0f, a/180.0f);
 				}
 			}
 
@@ -309,20 +309,20 @@ namespace Domino {
 				//================= Get Indices ====================================
 				int numIndices=mesh->GetPolygonVertexCount();
 				int *indicesRaw = mesh->GetPolygonVertices();
-				for (int i = 0; i < numIndices; i++) {
-					elements.push_back(indicesRaw[i] + baseline);
+				for (int j = 0; j < numIndices; j++) {
+					elements.push_back(indicesRaw[j] + baseline);
 				}
 
 				int cnt = 0;
 				int polygonCount = mesh->GetPolygonCount();
-				for (int i = 0; i < polygonCount; ++i) {
+				for (int j = 0; j < polygonCount; ++j) {
 
 					FbxLayerElementArrayTemplate<FbxVector2>* uvVertices= 0;
 					mesh->GetTextureUV(&uvVertices, FbxLayerElement::eTextureDiffuse);
 
-					for (int j = 0; j < mesh->GetPolygonSize(i); ++j) {
+					for (int k = 0; k < mesh->GetPolygonSize(j); ++k) {
 
-						FbxVector2 uv = (*uvVertices)[mesh->GetTextureUVIndex(i, j)];
+						FbxVector2 uv = (*uvVertices)[mesh->GetTextureUVIndex(j, k)];
 
 						uvs[indicesRaw[cnt] + baseline].x = uv[0];
 						uvs[indicesRaw[cnt] + baseline].y = uv[1];
